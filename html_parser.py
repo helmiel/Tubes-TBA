@@ -48,7 +48,7 @@ grammar = {
     'S': ['<html> A </html>'],
     'A': ['<head> D </head> B','B',''],
     'B': ['<body> C </body>', ''],
-    'C': ['<h2> </h2> C', '<p> </p> C', ''],
+    'C': ['<h1> </h1> C', '<p> </p> C', ''],
     'D': ['<title> </title>', ''],
 }
 parse_table = {
@@ -65,7 +65,7 @@ parse_table = {
         '</html>': ''
     },
     'C': {
-        '<h2>': '<h2> </h2> C', 
+        '<h1>': '<h1> </h1> C', 
         '<p>': '<p> </p> C',
         '</body>': '',
     },
