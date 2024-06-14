@@ -37,7 +37,7 @@ def end_state(char, curr_tag):
 def recog(token):
     curr_state = "START"
     curr_tag = ""
-    acc_tags = ['html', 'head', 'body', 'title', 'h2', 'p', 'img']
+    acc_tags = ['html', 'head', 'body', 'title', 'h1', 'p', 'img']
 
     for char in token:
         if curr_state == "START":
