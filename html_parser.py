@@ -16,12 +16,16 @@ def tokenize(html_content):
     while pos < len(html_content):
         if html_content[pos] == "<":
             endpos = closetag(html_content, pos)
-            if recog.recog(html_content[pos:endpos+1]) == "ACCEPTED":
-                tokens.append(html_content[pos:endpos+1])
+            if endpos == -1:
+                return ["ERROR"]
+            html_tag = html_content[pos:endpos+1].lower()
+            if recog.recog(html_tag) == "ACCEPTED":
+                tokens.append(html_tag)
             else:
                 return ["ERROR"]
-            pos = endpos
-        pos += 1
+            pos = endpos + 1
+        else:
+            pos += 1
 
     return tokens
 
@@ -36,7 +40,7 @@ def parser(input,parse_table):
         top = stack.pop()
         if top in parse_table: #jika top daripada stack berupa non terminal
             if read in parse_table[top]: #kalau 'read/symbol' ada di parse table 
-                produksi = parse_table[top][read] # 
+                produksi = parse_table[top][read] # produksinya apa
                 if produksi !='':
                     stack.extend(reversed(produksi.split())) #push hasil produksi ke stack secara terbalik
             else:
@@ -104,5 +108,5 @@ def main():
     token_html = tokenize(html_content)
     print(parser(token_html,parse_table))
 
-if __name__== "__main__":
+if __name__ == "__main__":
     main()
