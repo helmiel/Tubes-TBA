@@ -1,23 +1,30 @@
 import sys, recog
 
-# Tokenizer function
-def tokenize(teks):
+def closetag(html, start):
+    pos = start
+    while pos < len(html):
+        if html[pos] == ">":
+            return pos
+        pos += 1
+    return -1
+
+# Tokenize function
+def tokenize(html_content):
     tokens = []
     pos = 0
-    while pos < len(teks):
-        token = cek_dfa(teks[pos:])
-        if token:
-            tokens.append(token)
-            pos = pos + len(token)
+
+    while pos < len(html_content):
+        if html_content[pos] == "<":
+            endpos = closetag(html_content, pos)
+            if recog.recog(html_content[pos:endpos+1]) == "ACCEPTED":
+                tokens.append(html_content[pos:endpos+1])
+            else:
+                return ["ERROR"]
+            pos = endpos
         else:
             pos += 1
-    return tokens
 
-def cek_dfa(text):
-    for length in range(1, len(text) + 1):
-        if recog.recog(text[:length]) == "ACCEPTED":
-            return text[:length]
-    return None
+    return tokens
 
 def parser(input,parse_table):
     stack = []
@@ -25,7 +32,7 @@ def parser(input,parse_table):
     stack.append('S')
     input.append('EOS')
     i = 0
-    while stack[-1]!='#': #looping hingga isi stack teratas adalah #
+    while stack[-1]!='#': #looping hingga isi stack teratas adalah #    
         read = input[i] #LL(1)
         top = stack.pop()
         if top in parse_table: #jika top daripada stack berupa non terminal
@@ -91,9 +98,8 @@ def main():
 
     # Menampilkan isi tag yang ada pada file HTML
     print("Isi file tag pada file HTML:")
+    print(html_content)
     token_html = tokenize(html_content)
-    print(token_html)
-
     print(parser(token_html,parse_table))
 
 if __name__ == "__main__":
