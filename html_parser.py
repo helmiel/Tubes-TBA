@@ -35,9 +35,12 @@ def parser(input,parse_table):
     stack.append('S')
     input.append('EOS')
     i = 0
+    #['<html>', '<head>', '<title>', '</title>', '</head>', '<body>', '<h1>', '</h1>', '<p>', '</p>', '</body>', '</html>']
     while stack[-1]!='#': #looping hingga isi stack teratas adalah #    
+        # print(stack)
         read = input[i] #LL(1)
         top = stack.pop()
+        # print(stack)
         if top in parse_table: #jika top daripada stack berupa non terminal
             if read in parse_table[top]: #kalau 'read/symbol' ada di parse table 
                 produksi = parse_table[top][read] # produksinya apa
@@ -104,9 +107,9 @@ def main():
 
     # Menampilkan isi tag yang ada pada file HTML
     print("Isi file tag pada file HTML:")
-    print(html_content)
-    print(tokenize(html_content))
+    # print(html_content)
     token_html = tokenize(html_content)
+    print(token_html)
     print(parser(token_html,parse_table))
 
 if __name__ == "__main__":
