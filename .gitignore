@@ -1,5 +1,5 @@
 __pycache__
-.DS_store
-.pdf
-.zip
+*.DS_store
+*.pdf
+*.zip
 1_Laporan dan Source Code
