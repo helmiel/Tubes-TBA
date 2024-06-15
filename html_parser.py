@@ -21,8 +21,7 @@ def tokenize(html_content):
             else:
                 return ["ERROR"]
             pos = endpos
-        else:
-            pos += 1
+        pos += 1
 
     return tokens
 
@@ -41,14 +40,17 @@ def parser(input,parse_table):
                 if produksi !='':
                     stack.extend(reversed(produksi.split())) #push hasil produksi ke stack secara terbalik
             else:
-                return False
+                return "REJECTED"
         else: #jika top daripada stack berupa terminal
             if top == read:
                 i= i+1 #input maju
             else:
-                return False
+                return "REJECTED"
     top = stack.pop()
-    return stack == [] and top == "#"
+    if stack == [] and top == "#":
+        return "ACCEPTED"
+    else:
+        return "REJECTED" 
 
 #mendefinisikan grammar dan parser table
 grammar = {
@@ -102,5 +104,5 @@ def main():
     token_html = tokenize(html_content)
     print(parser(token_html,parse_table))
 
-if __name__ == "__main__":
+if __name__== "__main__":
     main()
