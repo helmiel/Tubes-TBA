@@ -105,6 +105,7 @@ def main():
     # Menampilkan isi tag yang ada pada file HTML
     print("Isi file tag pada file HTML:")
     print(html_content)
+    print(tokenize(html_content))
     token_html = tokenize(html_content)
     print(parser(token_html,parse_table))
 
